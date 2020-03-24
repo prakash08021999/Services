@@ -3,8 +3,6 @@ package com.example.ratingbarviewcontroller
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.ScrollView
 import android.view.View
 import android.util.Log
@@ -16,6 +14,8 @@ class MainActivity : AppCompatActivity() {
 
     private val TAG = "MyTag"
     public val MESSAGE_KEY = "message_key"
+
+    //Started service life cycle>> startService() -> onCreate() -> onStartCommand() -> Service Running -> stopService() or stopSelf() -> onDestroy() -> service shut down
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +36,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun clearOutput(v: View) {
+
+        val intent = Intent(this@MainActivity, MyDownloadService::class.java)
+        stopService(intent)
+
         tvLog.setText("")
         scrollTextToEnd()
     }
