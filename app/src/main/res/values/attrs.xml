@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SpecialProgressBarStyle">
+        <attr name="textSize" format="dimension|reference"/>
+        <attr name="textColorSuccess" format="color|reference"/>
+        <attr name="textColorNormal" format="color|reference"/>
+        <attr name="textColorError" format="color|reference"/>
+        <attr name="startDrawable" format="integer|reference"/>
+        <attr name="endSuccessDrawable" format="integer|reference"/>
+        <attr name="progressBarHeight" format="dimension|reference"/>
+        <attr name="progressBarBgColor" format="color|reference"/>
+        <attr name="progressBarColor" format="color|reference"/>
+        <attr name="canReBackable" format="boolean|reference"/>
+        <attr name="canDragable" format="boolean|reference"/>
+    </declare-styleable>
+</resources>
