@@ -11,6 +11,7 @@ class MyDownloadService : Service() {
     private val TAG = "MyTag"
     var mDownlaodThread : DownloadThread? = null
 
+
     override fun onCreate() {
         super.onCreate()
         //this will be called once how many time you call start service.
@@ -21,6 +22,8 @@ class MyDownloadService : Service() {
         while (mDownlaodThread!!.mHandler == null) {
 
         }
+
+        mDownlaodThread!!.mHandler.setMyDownloadService(this);
     }
 
     //1)after after application cloases service stop but after some time it will restart running.
@@ -29,11 +32,21 @@ class MyDownloadService : Service() {
         //this will be called when ever you call start service
         Log.d(TAG,"Thread id"+Thread.currentThread().name)//you will see that thread run on same main thread
         Log.d(TAG,"onStartCommand Called")
+
+
+        Log.d(TAG, "onStartCommand: called with Song Name: "+
+                intent!!.getStringExtra("message_key")+ " Intent Id: "+startId);
+
+        mDownlaodThread!!.mHandler.setMyResultReciever(intent!!.getParcelableExtra(Intent.EXTRA_RESULT_RECEIVER))
+
         val songName = intent!!.getStringExtra("message_key")
-        val message = Message.obtain();
+        val message = Message.obtain()
         message.obj = songName
+        message.arg1=startId
         mDownlaodThread!!.mHandler.sendMessage(message)
-        return START_REDELIVER_INTENT
+        //return START_STICKY->it will restart app but give null point exception when we try to get data through intent , because it doesn't retrun intent when app crashes.
+        //return START_NOT_STICKY ->it will not restart and not going to return intent.
+        return START_REDELIVER_INTENT // 1)restart 2) intent
     }
 
     override fun onBind(intent: Intent): IBinder? {
